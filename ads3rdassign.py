@@ -30,7 +30,7 @@ df_2019_elec_pop.to_csv("elec_pop.csv")
 
 # Rename axis
 df_2019_elec_pop = df_2019_elec_pop.dropna()
-df_2019_elec_pop = df_2019_elec_pop.rename(columns={"2019_x": "electricity", "2019_y": "population"})
+df_2019_elec_pop = df_2019_elec_pop.rename(columns={"2019_x": "Access to  Electricity", "2019_y": "Population"})
 
 pd.plotting.scatter_matrix(df_2019_elec_pop, figsize=(9.0, 9.0))
 plt.tight_layout()
@@ -39,15 +39,15 @@ for ncluster in range(2, 10):
     # set up the clusterer with the number of expected clusters
     kmeans = cluster.KMeans(n_clusters=ncluster)
     # Fit the data, results are stored in the kmeans object
-    kmeans.fit(df_2019_elec_pop[['electricity', 'population']])
+    kmeans.fit(df_2019_elec_pop[['Access to  Electricity', 'Population']])
     # fit done on x,y pairs
     labels = kmeans.labels_
     # extract the estimated cluster centres
     cen = kmeans. cluster_centers_
     # calculate the silhoutte score
-    print(ncluster,skmet.silhouette_score(df_2019_elec_pop[[ 'electricity', 'population']], labels))
+    print(ncluster,skmet.silhouette_score(df_2019_elec_pop[[ 'Access to  Electricity', 'Population']], labels))
     
-selected_columns = ['electricity', 'population']
+selected_columns = ['Access to  Electricity', 'Population']
 
 # Copy the selected columns to a new DataFrame
 df_2019_elec_pop_normalized = df_2019_elec_pop[selected_columns].copy()
@@ -68,9 +68,9 @@ ycen = cen[:, 1]
 # cluster by cluster
 plt.figure(figsize=(8.0, 8.0))
 cm = plt.cm.get_cmap('tab10')
-plt.scatter(df_2019_elec_pop_normalized["electricity"], df_2019_elec_pop_normalized["population"], 10, labels, marker="o",cmap=cm)
+plt.scatter(df_2019_elec_pop_normalized["Access to  Electricity"], df_2019_elec_pop_normalized["Population"], 10, labels, marker="o",cmap=cm)
 plt.scatter(xcen, ycen, 45,"k", marker="d")
-plt.xlabel ("electricity")
+plt.xlabel ("Access to electricity")
 plt.ylabel("population")
-plt.title("electricity - elct vS population - pop")
+plt.title("Access to electricity  vS Population ")
 plt.show()
