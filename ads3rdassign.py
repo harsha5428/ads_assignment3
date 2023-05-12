@@ -67,11 +67,11 @@ xcen = cen[:, 0]
 ycen = cen[:, 1]
 
 # cluster by cluster
-plt.figure(figsize=(8.0, 8.0))
+plt.figure(figsize=(10.0, 6.0))
 cm = plt.cm.get_cmap('tab10')
 plt.scatter(df_2019_elec_pop_normalized["Access to  Electricity"], df_2019_elec_pop_normalized["Population"], 10, labels, marker="o",cmap=cm)
 plt.scatter(xcen, ycen, 45,"k", marker="d")
-plt.xlabel ("Access to electricity")
-plt.ylabel("population")
-plt.title("Access to electricity  vS Population ")
+plt.xlabel ("Access to electricity",fontweight='bold',fontsize=19)
+plt.ylabel("population",fontweight='bold',fontsize=16)
+plt.title("Access to electricity  vS Population ",fontweight='bold',fontsize=16)
 plt.show()
