@@ -1,42 +1,10 @@
+# Import necessary libraries
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.optimize as opt
 import errors as err
 
-
-'''
-def err_ranges(x, func, param, sigma):
-    """
-    Calculates the upper and lower limits for the function, parameters and
-    sigmas for single value or array x. Functions values are calculated for 
-    all combinations of +/- sigma and the minimum and maximum is determined.
-    Can be used for all number of parameters and sigmas >=1.
-    
-    This routine can be used in assignment programs.
-    """
-
-    import itertools as iter
-    
-    # initiate arrays for lower and upper limits
-    lower = func(x, *param)
-    upper = lower
-    
-    uplow = []   # list to hold upper and lower limits for parameters
-    for p, s in zip(param, sigma):
-        pmin = p - s
-        pmax = p + s
-        uplow.append((pmin, pmax))
-        
-    pmix = list(iter.product(*uplow))
-    
-    for p in pmix:
-        y = func(x, *p)
-        lower = np.minimum(lower, y)
-        upper = np.maximum(upper, y)
-        
-    return lower, upper   
-'''
 def read_data_file(file_name):
     """
     Read data from a csv file and preprocess it for further analysis.
@@ -101,7 +69,7 @@ par2, cov = opt.curve_fit(curve_f, df_elec["year"], df_elec["India"], p0=[4e8, 0
 sigma = np.sqrt(np.diag(cov))
 
 # Getting the upper and lower error ranges using the sigma values and the covariance matrix
-low, up = err_ranges(df_elec["year"], curve_f, par2, sigma)
+low, up = err.err_ranges(df_elec["year"], curve_f, par2, sigma)
 
 # Creating a new column in the dataframe with the fit values and plotting the data and fit
 df_elec["fit_value_year"] = curve_f(df_elec["year"], *par2)
@@ -140,7 +108,7 @@ par3, cov = opt.curve_fit(curve_f, df_pop["year"], df_pop["India"], p0=[4e8, 0.1
 sigma = np.sqrt(np.diag(cov))
 
 # Calculate error ranges
-low, up = err_ranges(df_pop["year"], curve_f, par3, sigma)
+low, up = err.err_ranges(df_pop["year"], curve_f, par3, sigma)
 
 # Add fitted values to the DataFrame
 df_pop["fit_value_pop"] = curve_f(df_pop["year"], *par3)
